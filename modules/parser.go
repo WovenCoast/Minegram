@@ -84,7 +84,7 @@ func Parser(data utils.ModuleData) {
 										_, _ = io.WriteString(*data.Stdin, "effect give "+user+" minecraft:blindness 999999\n")
 										_, _ = io.WriteString(*data.Stdin, "gamemode spectator "+user+"\n")
 										_, _ = io.WriteString(*data.Stdin, "tellraw "+user+" [\"\",{\"text\":\"If you haven't linked before, send \"},{\"text\":\"/link "+newPlayer.InGameName+" \",\"color\":\"green\"},{\"text\":\"to \"},{\"text\":\"@"+(*data.TeleBot).Me.Username+"\",\"color\":\"yellow\"},{\"text\":\"\\nIf you have \"},{\"text\":\"linked \",\"color\":\"green\"},{\"text\":\"your account, send \"},{\"text\":\"/auth \",\"color\":\"aqua\"},{\"text\":\"to \"},{\"text\":\"@"+(*data.TeleBot).Me.Username+"\",\"color\":\"yellow\"}]\n")
-
+										_, _ = io.WriteString(*data.Stdin, "tellraw "+user+" [\"\",{\"text\"Join @sarcraft_s6 on Telegram For Instructions On how To JOIN \"}]\n")
 										if len(coords) == 4 {
 											if len(dimension) == 2 {
 												for {
