@@ -55,7 +55,7 @@ func Parser(data utils.ModuleData) {
 								if !utils.ContainsPlayer(*data.OnlinePlayers, user) {
 									newPlayer := utils.OnlinePlayer{InGameName: user, IsAuthd: false}
 									*data.OnlinePlayers = append(*data.OnlinePlayers, newPlayer)
-									toSend := "`" + user + "`" + " joined the server."
+									toSend := user + " joined the server."
 									if *data.IsAuthEnabled {
 										toSend += "\nUse /auth to authenticate."
 									}
