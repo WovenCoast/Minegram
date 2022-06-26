@@ -121,7 +121,7 @@ func Parser(data utils.ModuleData) {
 								coords := simplifiedEPRegex.FindStringSubmatch(startCoords)
 								toSend := "`" + sep[0] + "` " + strings.Join(sep[1:], " ")
 								if len(coords) == 4 {
-									toSend += " at (`" + coords[1] + " " + coords[2] + " " + coords[3] + "`)"
+									toSend += " "
 								}
 								_, _ = (*data.TeleBot).Send(*data.TargetChat, toSend+".", "Markdown")
 							}
