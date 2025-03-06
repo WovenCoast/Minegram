@@ -47,17 +47,20 @@ func Parser(data utils.ModuleData) {
 						if chatRegex.MatchString(m) {
 							result := chatRegex.FindStringSubmatch(m)
 							if len(result) == 3 {
-								_, _ = (*data.TeleBot).Send(*data.TargetChat, "`"+result[1]+"`"+"**:** "+result[2], "Markdown")
+								escapedUsername := utils.EscapeMarkdown(result[1])
+								escapedMessage := utils.EscapeMarkdown(result[2])
+								_, _ = (*data.TeleBot).Send(*data.TargetChat, "`"+escapedUsername+"`"+"**:** "+escapedMessage, "Markdown")
 							}
 						} else if joinRegex.MatchString(m) || joinRegexSpigotPaper.MatchString(m) {
 							result := joinRegex.FindStringSubmatch(m)
 
 							if len(result) == 2 {
 								user := result[1]
+								escapedUser := utils.EscapeMarkdown(user)
 								if !utils.ContainsPlayer(*data.OnlinePlayers, user) {
 									newPlayer := utils.OnlinePlayer{InGameName: user, IsAuthd: false}
 									*data.OnlinePlayers = append(*data.OnlinePlayers, newPlayer)
-									toSend := "`" + user + "`" + " joined the server."
+									toSend := "`" + escapedUser + "`" + " joined the server."
 
 									if *data.AuthType == utils.AuthTypeEnabled {
 										toSend += "\nUse /auth to authenticate."
@@ -73,7 +76,7 @@ func Parser(data utils.ModuleData) {
 
 										if currentUser.McIgn == "" && *data.AuthType == utils.AuthTypeLinkOnly {
 											io.WriteString(*data.Stdin, "kick "+user+"\n")
-											toSend = "`" + user + "` tried to join, but was kicked due to not having linked before."
+											toSend = "`" + escapedUser + "` tried to join, but was kicked due to not having linked before."
 											_, _ = (*data.TeleBot).Send(*data.TargetChat, toSend, "Markdown")
 											return
 										}
@@ -105,7 +108,9 @@ func Parser(data utils.ModuleData) {
 										if *data.AuthType == utils.AuthTypeEnabled {
 											_, _ = io.WriteString(*data.Stdin, "effect give "+user+" minecraft:blindness 999999\n")
 											_, _ = io.WriteString(*data.Stdin, "gamemode spectator "+user+"\n")
-											_, _ = io.WriteString(*data.Stdin, "tellraw "+user+" [\"\",{\"text\":\"If you haven't linked before, send \"},{\"text\":\"/link "+newPlayer.InGameName+" \",\"color\":\"green\"},{\"text\":\"to \"},{\"text\":\"@"+(*data.TeleBot).Me.Username+"\",\"color\":\"yellow\"},{\"text\":\"\\nIf you have \"},{\"text\":\"linked \",\"color\":\"green\"},{\"text\":\"your account, send \"},{\"text\":\"/auth \",\"color\":\"aqua\"},{\"text\":\"to \"},{\"text\":\"@"+(*data.TeleBot).Me.Username+"\",\"color\":\"yellow\"}]\n")
+											botUsername := utils.EscapeMarkdown((*data.TeleBot).Me.Username)
+											escapedPlayerName := utils.EscapeMarkdown(newPlayer.InGameName)
+											_, _ = io.WriteString(*data.Stdin, "tellraw "+user+" [\"\",{\"text\":\"If you haven't linked before, send \"},{\"text\":\"/link "+escapedPlayerName+" \",\"color\":\"green\"},{\"text\":\"to \"},{\"text\":\"@"+botUsername+"\",\"color\":\"yellow\"},{\"text\":\"\\nIf you have \"},{\"text\":\"linked \",\"color\":\"green\"},{\"text\":\"your account, send \"},{\"text\":\"/auth \",\"color\":\"aqua\"},{\"text\":\"to \"},{\"text\":\"@"+botUsername+"\",\"color\":\"yellow\"}]\n")
 
 											if len(coords) == 4 {
 												if len(dimension) == 2 {
@@ -129,23 +134,33 @@ func Parser(data utils.ModuleData) {
 							result := leaveRegex.FindStringSubmatch(m)
 							if len(result) == 2 {
 								*data.OnlinePlayers = utils.RemovePlayer(*data.OnlinePlayers, result[1])
-								_, _ = (*data.TeleBot).Send(*data.TargetChat, "`"+result[1]+"`"+" has left the server.", "Markdown")
+								escapedUsername := utils.EscapeMarkdown(result[1])
+								_, _ = (*data.TeleBot).Send(*data.TargetChat, "`"+escapedUsername+"`"+" has left the server.", "Markdown")
 							}
 						} else if advancementRegex.MatchString(m) {
 							result := advancementRegex.FindStringSubmatch(m)
 							if len(result) == 3 {
-								_, _ = (*data.TeleBot).Send(*data.TargetChat, "`"+result[1]+"`"+" has made the advancement `"+result[2]+"`.", "Markdown")
+								escapedUsername := utils.EscapeMarkdown(result[1])
+								escapedAdvancement := utils.EscapeMarkdown(result[2])
+								_, _ = (*data.TeleBot).Send(*data.TargetChat, "`"+escapedUsername+"`"+" has made the advancement `"+escapedAdvancement+"`.", "Markdown")
 							}
 						} else if deathRegex.MatchString(m) {
 							result := simpleOutputRegex.FindStringSubmatch(m)
 							if len(result) == 2 {
 								sep := strings.Split(result[1], " ")
-								// startCoords := utils.CliExec(*data.Stdin, "data get entity "+sep[0]+" Pos", data.NeedResult, *data.ConsoleOut)
-								// coords := simplifiedEPRegex.FindStringSubmatch(startCoords)
-								toSend := "`" + sep[0] + "` " + strings.Join(sep[1:], " ")
-								// if len(coords) == 4 {
-								// 	toSend += " at (`" + coords[1] + " " + coords[2] + " " + coords[3] + "`)"
-								// }
+								startCoords := utils.CliExec(*data.Stdin, "data get entity "+sep[0]+" Pos", data.NeedResult, *data.ConsoleOut)
+								coords := simplifiedEPRegex.FindStringSubmatch(startCoords)
+
+								escapedUsername := utils.EscapeMarkdown(sep[0])
+								escapedDeathMessage := utils.EscapeMarkdown(strings.Join(sep[1:], " "))
+
+								toSend := "`" + escapedUsername + "` " + escapedDeathMessage
+								if len(coords) == 4 {
+									escapedX := utils.EscapeMarkdown(coords[1])
+									escapedY := utils.EscapeMarkdown(coords[2])
+									escapedZ := utils.EscapeMarkdown(coords[3])
+									toSend += " at (`" + escapedX + " " + escapedY + " " + escapedZ + "`)"
+								}
 								_, _ = (*data.TeleBot).Send(*data.TargetChat, toSend+".", "Markdown")
 							}
 						} else if strings.Contains(m, "For help, type") {
