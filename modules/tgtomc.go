@@ -22,9 +22,7 @@ func TgToMc(data utils.ModuleData) {
 				if m.ReplyTo.Text == "" {
 					m.ReplyTo.Text = "[unsupported]"
 				}
-
 				m.ReplyTo.Text = strings.ReplaceAll(m.ReplyTo.Text, "\n", "(nl)")
-				
 				_, err = io.WriteString(*data.Stdin, "tellraw @a [\"\",{\"text\":\"[TG] "+sender+"\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\"(\",\"color\":\"yellow\"},{\"text\":\"reply\",\"bold\":true,\"color\":\"yellow\",\"hoverEvent\":{\"action\":\"show_text\",\"contents\":\""+m.ReplyTo.Text+"\"}},{\"text\":\")\",\"color\":\"yellow\"},{\"text\":\" "+content+"\"}]\n")
 			} else {
 				_, err = io.WriteString(*data.Stdin, "tellraw @a [\"\",{\"text\":\"[TG] "+sender+"\",\"color\":\"aqua\"},{\"text\":\": "+content+"\",\"color\":\"white\"}]\n")
@@ -40,6 +38,7 @@ func TgToMc(data utils.ModuleData) {
 				if m.ReplyTo.Text == "" {
 					m.ReplyTo.Text = "[unsupported]"
 				}
+				m.ReplyTo.Text = strings.ReplaceAll(m.ReplyTo.Text, "\n", "(nl)")
 				_, err = io.WriteString(*data.Stdin, "tellraw @a [\"\",{\"text\":\"[TG] "+sender+"\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\"(\",\"color\":\"yellow\"},{\"text\":\"reply\",\"bold\":true,\"color\":\"yellow\",\"hoverEvent\":{\"action\":\"show_text\",\"contents\":\""+m.ReplyTo.Text+"\"}},{\"text\":\")\",\"color\":\"yellow\"},{\"text\":\" "+content+"\"}]\n")
 			} else {
 				_, err = io.WriteString(*data.Stdin, "tellraw @a [\"\",{\"text\":\"[TG] "+sender+"\",\"color\":\"aqua\"},{\"text\":\": "+content+"\",\"color\":\"yellow\"}]\n")
@@ -55,6 +54,7 @@ func TgToMc(data utils.ModuleData) {
 				if m.ReplyTo.Text == "" {
 					m.ReplyTo.Text = "[unsupported]"
 				}
+				m.ReplyTo.Text = strings.ReplaceAll(m.ReplyTo.Text, "\n", "(nl)")
 				_, err = io.WriteString(*data.Stdin, "tellraw @a [\"\",{\"text\":\"[TG] "+sender+"\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\"(\",\"color\":\"yellow\"},{\"text\":\"reply\",\"bold\":true,\"color\":\"yellow\",\"hoverEvent\":{\"action\":\"show_text\",\"contents\":\""+m.ReplyTo.Text+"\"}},{\"text\":\")\",\"color\":\"yellow\"},{\"text\":\" "+content+"\"}]\n")
 			} else {
 				_, err = io.WriteString(*data.Stdin, "tellraw @a [\"\",{\"text\":\"[TG] "+sender+"\",\"color\":\"aqua\"},{\"text\":\": "+content+"\",\"color\":\"yellow\"}]\n")
@@ -70,6 +70,7 @@ func TgToMc(data utils.ModuleData) {
 				if m.ReplyTo.Text == "" {
 					m.ReplyTo.Text = "[unsupported]"
 				}
+				m.ReplyTo.Text = strings.ReplaceAll(m.ReplyTo.Text, "\n", "(nl)")
 				_, err = io.WriteString(*data.Stdin, "tellraw @a [\"\",{\"text\":\"[TG] "+sender+"\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\"(\",\"color\":\"yellow\"},{\"text\":\"reply\",\"bold\":true,\"color\":\"yellow\",\"hoverEvent\":{\"action\":\"show_text\",\"contents\":\""+m.ReplyTo.Text+"\"}},{\"text\":\")\",\"color\":\"yellow\"},{\"text\":\" "+content+"\"}]\n")
 			} else {
 				_, err = io.WriteString(*data.Stdin, "tellraw @a [\"\",{\"text\":\"[TG] "+sender+"\",\"color\":\"aqua\"},{\"text\":\": "+content+"\",\"color\":\"yellow\"}]\n")
@@ -85,6 +86,7 @@ func TgToMc(data utils.ModuleData) {
 				if m.ReplyTo.Text == "" {
 					m.ReplyTo.Text = "[unsupported]"
 				}
+				m.ReplyTo.Text = strings.ReplaceAll(m.ReplyTo.Text, "\n", "(nl)")
 				_, err = io.WriteString(*data.Stdin, "tellraw @a [\"\",{\"text\":\"[TG] "+sender+"\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\"(\",\"color\":\"yellow\"},{\"text\":\"reply\",\"bold\":true,\"color\":\"yellow\",\"hoverEvent\":{\"action\":\"show_text\",\"contents\":\""+m.ReplyTo.Text+"\"}},{\"text\":\")\",\"color\":\"yellow\"},{\"text\":\" "+content+"\"}]\n")
 			} else {
 				_, err = io.WriteString(*data.Stdin, "tellraw @a [\"\",{\"text\":\"[TG] "+sender+"\",\"color\":\"aqua\"},{\"text\":\": "+content+"\",\"color\":\"yellow\"}]\n")
