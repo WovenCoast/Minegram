@@ -140,12 +140,12 @@ func Parser(data utils.ModuleData) {
 							result := simpleOutputRegex.FindStringSubmatch(m)
 							if len(result) == 2 {
 								sep := strings.Split(result[1], " ")
-								startCoords := utils.CliExec(*data.Stdin, "data get entity "+sep[0]+" Pos", data.NeedResult, *data.ConsoleOut)
-								coords := simplifiedEPRegex.FindStringSubmatch(startCoords)
+								// startCoords := utils.CliExec(*data.Stdin, "data get entity "+sep[0]+" Pos", data.NeedResult, *data.ConsoleOut)
+								// coords := simplifiedEPRegex.FindStringSubmatch(startCoords)
 								toSend := "`" + sep[0] + "` " + strings.Join(sep[1:], " ")
-								if len(coords) == 4 {
-									toSend += " at (`" + coords[1] + " " + coords[2] + " " + coords[3] + "`)"
-								}
+								// if len(coords) == 4 {
+								// 	toSend += " at (`" + coords[1] + " " + coords[2] + " " + coords[3] + "`)"
+								// }
 								_, _ = (*data.TeleBot).Send(*data.TargetChat, toSend+".", "Markdown")
 							}
 						} else if strings.Contains(m, "For help, type") {
